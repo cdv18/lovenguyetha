@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love for Nguyệt Hà</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at top left, #ff9cda 0%, #ff5cab 100%);
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from {text-shadow: 0 0 10px #fff, 0 0 20px #ff4da6;}
+      to   {text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6;}
+    }
+    p {
+      max-width: 600px;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      background: #fff;
+      color: #ff5cab;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all .3s ease;
+      font-weight: 700;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      background: #ffe6f2;
+    }
+    /* Heart animation */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 29.6"><path fill="%23ff4da6" d="M23.6,0C20,0,16.6,2.2,16,5.4C15.4,2.2,12,0,8.4,0C3.4,0,0,3.7,0,8.2c0,6.6,7.5,11.6,16,21.4c8.5-9.8,16-14.8,16-21.4C32,3.7,28.6,0,23.6,0z"/></svg>') no-repeat center/contain;
+      opacity: 0;
+      animation: float 8s linear infinite;
+    }
+    @keyframes float {
+      0%   {transform: translateY(0)   scale(0.5) rotate(0deg);   opacity: 1;}
+      100% {transform: translateY(-100vh) scale(1.8) rotate(360deg); opacity: 0;}
+    }
+  </style>
+</head>
+<body>
+  <h1>Gửi tới Nguyệt Hà 💖</h1>
+  <p id="story"></p>
+  <button class="btn" onclick="playStory()">Nghe Anh nói nè!</button>
+  <audio id="bgm" src="https://cdn.pixabay.com/download/audio/2023/02/28/audio_c591dbea7a.mp3?filename=romantic-piano-145633.mp3"></audio>
+
+  <script>
+  const lines = [
+    "Em là ánh trăng dịu dàng nhất bầu trời đêm đời anh.",
+    "Mỗi nhịp tim anh đập, anh đều gọi tên: Nguyệt Hà.",
+    "Nếu tình yêu có hình dáng, thì đó chính là nụ cười của em.",
+    "Cả thế giới có thể thay đổi, nhưng anh – mãi yêu em.",
+    "Mình cùng viết tiếp câu chuyện mang tên 'chúng ta' nhé?"
+  ];
+  let index = 0;
+
+  function playStory() {
+    const story = document.getElementById('story');
+    const bgm   = document.getElementById('bgm');
+    if (bgm.paused) bgm.play();
+    story.innerHTML = '';
+    typeLine();
+  }
+
+  function typeLine() {
+    if (index >= lines.length) { index = 0; return; }
+    const story = document.getElementById('story');
+    let i = 0;
+    const text = lines[index];
+    const interval = setInterval(() => {
+      story.innerHTML = text.substring(0, i) + '<span style="opacity:0.3">|</span>';
+      i++;
+      if (i > text.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          index++;
+          typeLine();
+        }, 1500);
+      }
+    }, 100);
+  }
+
+  // Generate floating hearts
+  function spawnHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+  }
+  setInterval(spawnHeart, 300);
+  </script>
+</body>
+</html>
